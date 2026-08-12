@@ -569,7 +569,8 @@
         [0, 0, 1,  [[-sx, -sy, sz], [-sx, sy, sz], [sx, sy, sz], [sx, -sy, sz]]]
       ];
       for (let f = 0; f < faces.length; f++) {
-        const n = faces[f][0], c = faces[f][1];
+        const n = [faces[f][0], faces[f][1], faces[f][2]];
+        const c = faces[f][3];
         for (let k = 0; k < 4; k++) {
           const corner = c[k];
           positions.push(cx + corner[0], cy + corner[1], cz + corner[2]);
@@ -620,7 +621,8 @@
       [1, 0, 0,  [[3.0, -0.11, -0.16], [3.0, -0.11, 0.16], [3.0, 0.11, 0.16], [3.0, 0.11, -0.16]]]
     ];
     for (let f = 0; f < faces.length; f++) {
-      const n = faces[f][0], c = faces[f][1];
+      const n = [faces[f][0], faces[f][1], faces[f][2]];
+      const c = faces[f][3];
       for (let k = 0; k < 4; k++) {
         const corner = c[k];
         positions.push(corner[0], corner[1], corner[2]);
