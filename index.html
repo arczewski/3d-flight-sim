@@ -562,23 +562,24 @@
     function addBox(cx, cy, cz, sx, sy, sz, color) {
       const faces = [
         [0, -1, 0, [[-sx, -sy, -sz], [sx, -sy, -sz], [sx, -sy, sz], [-sx, -sy, sz]]],
-        [0, 1, 0,  [[-sx, sy, -sz], [sx, sy, -sz], [sx, sy, sz], [-sx, sy, sz]]],
+        [0, 1, 0,  [[-sx, sy, -sz], [-sx, sy, sz], [sx, sy, sz], [sx, sy, -sz]]],
         [-1, 0, 0, [[-sx, -sy, -sz], [-sx, -sy, sz], [-sx, sy, sz], [-sx, sy, -sz]]],
-        [1, 0, 0,  [[sx, -sy, -sz], [sx, -sy, sz], [sx, sy, sz], [sx, sy, -sz]]],
+        [1, 0, 0,  [[sx, -sy, -sz], [sx, sy, -sz], [sx, sy, sz], [sx, -sy, sz]]],
         [0, 0, -1, [[-sx, -sy, -sz], [-sx, sy, -sz], [sx, sy, -sz], [sx, -sy, -sz]]],
-        [0, 0, 1,  [[-sx, -sy, sz], [-sx, sy, sz], [sx, sy, sz], [sx, -sy, sz]]]
+        [0, 0, 1,  [[-sx, -sy, sz], [sx, -sy, sz], [sx, sy, sz], [-sx, sy, sz]]]
       ];
       for (let f = 0; f < faces.length; f++) {
         const n = [faces[f][0], faces[f][1], faces[f][2]];
         const c = faces[f][3];
+        const base = vert;
         for (let k = 0; k < 4; k++) {
           const corner = c[k];
           positions.push(cx + corner[0], cy + corner[1], cz + corner[2]);
           normals.push(n[0], n[1], n[2]);
           colors.push(color[0], color[1], color[2]);
-          indices.push(vert, vert + 1, vert + 2, vert, vert + 2, vert + 3);
-          vert += 4;
+          vert += 1;
         }
+        indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
       }
     }
 
@@ -616,21 +617,22 @@
     let vert = 0;
     const faces = [
       [0, -1, 0, [[-3.0, -0.11, -0.16], [3.0, -0.11, -0.16], [3.0, -0.11, 0.16], [-3.0, -0.11, 0.16]]],
-      [0, 1, 0,  [[-3.0, 0.11, -0.16], [3.0, 0.11, -0.16], [3.0, 0.11, 0.16], [-3.0, 0.11, 0.16]]],
+      [0, 1, 0,  [[-3.0, 0.11, -0.16], [-3.0, 0.11, 0.16], [3.0, 0.11, 0.16], [3.0, 0.11, -0.16]]],
       [-1, 0, 0, [[-3.0, -0.11, -0.16], [-3.0, -0.11, 0.16], [-3.0, 0.11, 0.16], [-3.0, 0.11, -0.16]]],
-      [1, 0, 0,  [[3.0, -0.11, -0.16], [3.0, -0.11, 0.16], [3.0, 0.11, 0.16], [3.0, 0.11, -0.16]]]
+      [1, 0, 0,  [[3.0, -0.11, -0.16], [3.0, 0.11, -0.16], [3.0, 0.11, 0.16], [3.0, -0.11, 0.16]]]
     ];
     for (let f = 0; f < faces.length; f++) {
       const n = [faces[f][0], faces[f][1], faces[f][2]];
       const c = faces[f][3];
+      const base = vert;
       for (let k = 0; k < 4; k++) {
         const corner = c[k];
         positions.push(corner[0], corner[1], corner[2]);
         normals.push(n[0], n[1], n[2]);
         colors.push(0.25, 0.25, 0.28);
-        indices.push(vert, vert + 1, vert + 2, vert, vert + 2, vert + 3);
-        vert += 4;
+        vert += 1;
       }
+      indices.push(base, base + 1, base + 2, base, base + 2, base + 3);
     }
     return {
       positions: new Float32Array(positions),
