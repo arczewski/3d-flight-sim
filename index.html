@@ -429,20 +429,17 @@
     vec3 L = normalize(uSunDir);
     float diff = max(dot(n, L), 0.0);
     vec3 lit = aColor * (0.35 + diff * 0.85);
-    vColor = lit;
     vec4 viewPos = uView * world;
     float dist = length(viewPos.xyz);
     vFog = clamp((dist - uFogStart) / (uFogEnd - uFogStart), 0.0, 1.0);
+    vColor = mix(lit, uFogColor, vFog);
   }`;
 
   const FS = `
   precision mediump float;
   varying vec3 vColor;
-  varying float vFog;
-  uniform vec3 uFogColor;
   void main() {
-    vec3 c = mix(vColor, uFogColor, vFog);
-    gl_FragColor = vec4(c, 1.0);
+    gl_FragColor = vec4(vColor, 1.0);
   }`;
 
   const program = createProgram(VS, FS);
